@@ -48,28 +48,48 @@ const pizzaData = [
   },
 ];
 
-function Header() {}
-function Menu() {}
-function Footer() {}
-
-function App() {
+function Header() {
   return (
-    <div>
-      <h1>Hello React!</h1>
-      <Pizza />
-      <Pizza />
-      <Pizza />
-    </div>
+    <header className="header">
+      <h1>Fast React Pizza Co.</h1>
+    </header>
   );
 }
 
-// Pizza.jsx
 function Pizza() {
   return (
     <div>
       <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h2>Pizza Spinaci</h2>
+      <h3>Pizza Spinaci</h3>
       <p>Tomato, mozzarella, spinach, and ricotta cheese</p>
+    </div>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <Pizza />
+      <Pizza />
+      <Pizza />
+    </main>
+  );
+}
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  return <footer className="footer"> {new Date().toLocaleTimeString()} We are currently open</footer>;
+}
+
+function App() {
+  return (
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
 }
