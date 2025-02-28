@@ -3,6 +3,16 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 // import reportWebVitals from "./reportWebVitals";
 
+interface PizzaProps {
+  pizzaData: {
+    name: string;
+    ingredients: string;
+    price: number;
+    photoName: string;
+    soldOut: boolean;
+  };
+}
+
 const pizzaData = [
   {
     name: "Focaccia",
@@ -56,32 +66,54 @@ function Header() {
   );
 }
 
-function Pizza() {
-  return (
-    <div>
-      <img src="pizzas/spinaci.jpg" alt="Pizza spinaci" />
-      <h3>Pizza Spinaci</h3>
-      <p>Tomato, mozzarella, spinach, and ricotta cheese</p>
-    </div>
-  );
-}
-
 function Menu() {
+  const pizzaNum = pizzaData.length;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+      {pizzaNum > 0 ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaData={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>We are still working on our menu! Please come back later!</p>
+      )}
     </main>
   );
 }
+
+function Pizza(props: PizzaProps) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaData.photoName} alt={props.pizzaData.name} />
+      <div>
+        <h3>{props.pizzaData.name}</h3>
+        <p>{props.pizzaData.ingredients}</p>
+        <span>{props.pizzaData.price}</span>
+      </div>
+    </li>
+  );
+}
+
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 12;
+  const openHour = 10;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
-  return <footer className="footer"> {new Date().toLocaleTimeString()} We are currently open</footer>;
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <div className="order">
+          <p>{`We're open until ${closeHour}! Come visit us or order online!`}</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <p>{`We are happy to welcome you between ${openHour}:00 and ${closeHour}:00`}</p>
+      )}
+    </footer>
+  );
 }
 
 function App() {
