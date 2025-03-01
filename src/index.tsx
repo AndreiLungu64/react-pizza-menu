@@ -84,14 +84,14 @@ function Menu() {
   );
 }
 
-function Pizza(props: PizzaProps) {
+function Pizza({ pizzaData }: PizzaProps) {
   return (
     <li className="pizza">
-      <img src={props.pizzaData.photoName} alt={props.pizzaData.name} />
+      <img src={pizzaData.photoName} alt={pizzaData.name} />
       <div>
-        <h3>{props.pizzaData.name}</h3>
-        <p>{props.pizzaData.ingredients}</p>
-        <span>{props.pizzaData.price}</span>
+        <h3>{pizzaData.name}</h3>
+        <p>{pizzaData.ingredients}</p>
+        <span>{pizzaData.price}</span>
       </div>
     </li>
   );
@@ -102,17 +102,15 @@ function Footer() {
   const openHour = 10;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
+  return <footer className="footer">{isOpen ? <Order closeHour={closeHour} openHour={openHour} /> : <p>{`We are happy to welcome you between ${openHour}:00 and ${closeHour}:00`}</p>}</footer>;
+}
+
+function Order({ closeHour, openHour }: { openHour: number; closeHour: number }) {
   return (
-    <footer className="footer">
-      {isOpen ? (
-        <div className="order">
-          <p>{`We're open until ${closeHour}! Come visit us or order online!`}</p>
-          <button className="btn">Order</button>
-        </div>
-      ) : (
-        <p>{`We are happy to welcome you between ${openHour}:00 and ${closeHour}:00`}</p>
-      )}
-    </footer>
+    <div className="order">
+      <p>{`We're open from ${openHour}:00 to ${closeHour}:00! Come visit us or order online!`}</p>
+      <button className="btn">Order</button>
+    </div>
   );
 }
 
