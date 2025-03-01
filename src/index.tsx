@@ -61,7 +61,7 @@ const pizzaData = [
 function Header() {
   return (
     <header className="header">
-      <h1>Fast React Pizza Co.</h1>
+      <h1>React Pizza Menu</h1>
     </header>
   );
 }
@@ -71,12 +71,16 @@ function Menu() {
   return (
     <main className="menu">
       <h2>Our Menu</h2>
+
       {pizzaNum > 0 ? (
-        <ul className="pizzas">
-          {pizzaData.map((pizza) => (
-            <Pizza pizzaData={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <>
+          <p> Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaData={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>We are still working on our menu! Please come back later!</p>
       )}
@@ -86,12 +90,12 @@ function Menu() {
 
 function Pizza({ pizzaData }: PizzaProps) {
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaData.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaData.photoName} alt={pizzaData.name} />
       <div>
         <h3>{pizzaData.name}</h3>
         <p>{pizzaData.ingredients}</p>
-        <span>{pizzaData.price}</span>
+        <span>{pizzaData.soldOut ? "SOLD OUT!" : pizzaData.price}</span>
       </div>
     </li>
   );
